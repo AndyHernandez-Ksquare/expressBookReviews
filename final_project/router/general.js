@@ -32,14 +32,13 @@ function getBooks() {
 }
 
 // Get the book list available in the shop
-public_users.get("/", function (req, res) {
-  getBooks()
-    .then((result) => {
-      res.status(200).json(result);
-    })
-    .catch((error) => {
-      res.status(500).json({ message: error.message });
-    });
+public_users.get("/", async function (req, res) {
+  try {
+    const bks = await getBooks();
+    res.status(200).json(bks);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
 
 function getBookByISBN(isbn) {
